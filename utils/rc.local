@@ -11,13 +11,11 @@
 #
 # By default this script does nothing.
 
-# defualt location is /etc
-
 # Print the IP address
 _IP=$(hostname -I) || true
 if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
-  python /home/pi/java/bluetooth/startup_ip.py
+  python /home/pi/git/seniordesign/startup_ip.py
 fi
 
 exit 0
