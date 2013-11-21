@@ -50,15 +50,19 @@ public class ProcessConnectionThread implements Runnable{
      * @param command the command code
      */
     private void processCommand(int command) {
+	String cmd = "";
 	try {
 	    System.out.println("Command");
-	    Robot robot = new Robot();
 	    switch (command) {
 	    case KEY_RIGHT:
 		System.out.println("Right");
+		cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py Right";
+		Runtime.getRuntime().exec(cmd);
 		break;
 	    case KEY_LEFT:
 		System.out.println("Left");
+		cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py Left";
+                Runtime.getRuntime().exec(cmd);
 		break;
 	    }
 	} catch (Exception e) {
