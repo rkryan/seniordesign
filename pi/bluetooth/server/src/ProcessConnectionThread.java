@@ -56,12 +56,12 @@ public class ProcessConnectionThread implements Runnable{
 	    switch (command) {
 	    case KEY_RIGHT:
 		System.out.println("Right");
-		cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py Right";
+		cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py 1";
 		Runtime.getRuntime().exec(cmd);
 		break;
 	    case KEY_LEFT:
 		System.out.println("Left");
-		cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py Left";
+		cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py 0";
                 Runtime.getRuntime().exec(cmd);
 		break;
 	    }
