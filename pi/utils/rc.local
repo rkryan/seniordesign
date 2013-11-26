@@ -15,7 +15,7 @@
 _IP=$(hostname -I) || true
 if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
-  python /home/pi/git/seniordesign/startup_ip.py
+  python /home/pi/git/seniordesign/pi/utils/startup_ip.py
 fi
 
 exit 0
