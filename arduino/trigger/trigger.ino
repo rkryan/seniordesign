@@ -16,6 +16,8 @@ void loop()
   {
     delay(time);
     digitalWrite(outpin,HIGH);
+    delay(1);
+    digitalWrite(outpin,LOW);
     // Serial.println("Trigger");    
     flag = 1;
   }
