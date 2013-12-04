@@ -12,8 +12,10 @@ void loop()
 {
   if(flag == 0)
   {
-    delay(4);
+    delay(2);
     digitalWrite(outpin,HIGH);
+    delay(1);
+    digitalWrite(outpin,LOW);
     // Serial.println("Trigger");
     flag = 1;
   }

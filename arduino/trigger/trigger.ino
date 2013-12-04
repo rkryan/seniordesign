@@ -25,7 +25,7 @@ void loop()
   if (Serial.available() > 0) {
     incomingByte = Serial.read();
     if (incomingByte == (byte)'0') {
-      time = 4;
+      time = 6;
     } else if (incomingByte == (byte)'1') {
       time = 2;
     }
