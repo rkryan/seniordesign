@@ -10,43 +10,45 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.microedition.io.StreamConnectionNotifier;
 
+/** Thread that waits for a Stream Connection, waits for a device to connect,
+ *  and calls a class that receives and interprets the commands.
+ */
 public class WaitThread implements Runnable {
     
     public WaitThread() {
     }
-
+    
     public void run() {
-	waitForConnection();
+		waitForConnection();
     }
-
+    
     private void waitForConnection() {
-	LocalDevice local = null;
+		LocalDevice local = null;
+		
+		StreamConnectionNotifier notifier;
+		StreamConnection connection = null;
 	
-	StreamConnectionNotifier notifier;
-	StreamConnection connection = null;
-
-	try {
-	    local = LocalDevice.getLocalDevice();
-	    local.setDiscoverable(DiscoveryAgent.GIAC);
-	    UUID uuid = new UUID(80087355);
-	    String url = "btspp://localhost:" + uuid.toString() + ";name=RemoteBluetooth";
-	    notifier = (StreamConnectionNotifier)Connector.open(url);
-	} catch(Exception ex) {
-	    ex.printStackTrace();
-	    return;
-	}
-
-	while(true) {
-	    try {
-		System.out.println("waiting for connection...");
-		connection = notifier.acceptAndOpen();
-		Thread processThread = new Thread(new ProcessConnectionThread(connection));
-		processThread.start();
-	    } catch (Exception ex) {
-		ex.printStackTrace();
-		return;
-	    }
-	}
+		try {
+			local = LocalDevice.getLocalDevice();
+			local.setDiscoverable(DiscoveryAgent.GIAC);
+			UUID uuid = new UUID(80087355);
+			String url = "btspp://localhost:" + uuid.toString() + ";name=RemoteBluetooth";
+			notifier = (StreamConnectionNotifier)Connector.open(url);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return;
+		}
+	
+		while(true) {
+			try {
+				System.out.println("Waiting for connection...");
+				connection = notifier.acceptAndOpen();
+				Thread processThread = new Thread(new ProcessConnectionThread(connection));
+				processThread.start();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				return;
+			}
+		}
     }
 }
-	
