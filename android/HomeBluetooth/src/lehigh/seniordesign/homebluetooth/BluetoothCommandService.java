@@ -363,7 +363,6 @@ public class BluetoothCommandService {
 			} catch (IOException e) {
 				Log.e(TAG, "temp sockets not created", e);
 			}
-
 			mmInStream = tmpIn;
 			mmOutStream = tmpOut;
 		}
