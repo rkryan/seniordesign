@@ -4,3 +4,10 @@
 
 # Autosaves
 *~
+
+#################
+## Java
+#################
+
+# Class Files
+*.class
