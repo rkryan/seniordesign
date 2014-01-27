@@ -4,5 +4,5 @@ void setup(){
 
 void loop(){
   
-   Serial.write(“hello”); //send the string “hello”
+   Serial.write("hello");
 }
