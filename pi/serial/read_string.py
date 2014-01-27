@@ -8,8 +8,6 @@
 
 import serial, sys
 
-output = sys.argv[1]
-
 ser = serial.Serial("/dev/ttyAMA0") # opens serial link over UART Tx pin
 ser.baudrate = 1200 # predetermined baud rate
 while 1:
