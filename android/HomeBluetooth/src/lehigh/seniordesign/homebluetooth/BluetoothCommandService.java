@@ -75,7 +75,7 @@ public class BluetoothCommandService {
 
 		// Give the new state to the Handler so the UI Activity can update
 		mHandler.obtainMessage(MainActivity.MESSAGE_STATE_CHANGE, state, -1)
-		.sendToTarget();
+				.sendToTarget();
 	}
 
 	/**
