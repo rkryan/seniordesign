@@ -244,21 +244,25 @@ public class MainActivity extends Activity {
 	}
 
 	public void off1(View view) {
+		sk1.setProgress(0);
 		mCommandService.write(1);
 		mCommandService.write(0);
 	}
 
 	public void on1(View view) {
+		sk1.setProgress(100);
 		mCommandService.write(1);
 		mCommandService.write(100);
 	}
 
 	public void off2(View view) {
+		sk2.setProgress(0);
 		mCommandService.write(2);
 		mCommandService.write(0);
 	}
 
 	public void on2(View view) {
+		sk2.setProgress(100);
 		mCommandService.write(2);
 		mCommandService.write(100);
 	}
