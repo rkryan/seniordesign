@@ -3,6 +3,7 @@ package bluetooth;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.InputStream;
+import java.lang.Integer;
 
 import javax.microedition.io.StreamConnection;
 
@@ -19,11 +20,11 @@ public class ProcessConnectionThread implements Runnable {
     private static final int KEY_LEFT = 2;
     
     public ProcessConnectionThread(StreamConnection connection) {
-		mConnection = connection;
+	mConnection = connection;
     }
     
     @Override
-    public void run() {
+	public void run() {
 	try {
 	    
 	    InputStream inputStream = mConnection.openInputStream();
@@ -31,39 +32,36 @@ public class ProcessConnectionThread implements Runnable {
 	    System.out.println("waiting for input");
 	    
 	    while (true) {
-			int command = inputStream.read();
-		
-			if (command == EXIT_CMD) {
-					System.out.println("Exiting process...");
-					break;
-				}
+		int command = inputStream.read();
 			
-				processCommand(command);
+			if (command == EXIT_CMD) {
+			    System.out.println("Exiting process...");
+					break;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			
+			processCommand(command);
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
-
-	// Calls a python script from the shell to send the command over UART
+    
+    // Calls a python script from the shell to send the command over UART
     private void processCommand(int command) {
-		String cmd = "";
-		try {
-			System.out.println("Command");
-			switch (command) {
-			case KEY_RIGHT:
-				System.out.println("High");
-				cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py 1";
-				Runtime.getRuntime().exec(cmd);
-				break;
-			case KEY_LEFT:
-				System.out.println("Low");
-				cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py 0";
-				Runtime.getRuntime().exec(cmd);
-				break;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	try {
+	    String cmd = "";
+	    String commandString = Integer.toString(command);
+	    String target = commandString.substring(0, 1);
+	    String value = commandString.substring(1, commandString.length());
+	    System.out.println("Command: " + command);
+	    System.out.println("Target: " + target);
+	    System.out.println("Value: " + value);
+	    cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py " + target;
+	    Runtime.getRuntime().exec(cmd);
+	    cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py " + value;
+	    Runtime.getRuntime().exec(cmd);
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
 }
