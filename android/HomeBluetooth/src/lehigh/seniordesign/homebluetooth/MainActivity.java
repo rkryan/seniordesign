@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
 		sk1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			int seekProgress;
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				seekSend(seekProgress, "1");
+				seekSend(seekProgress, 1);
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress,
@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
 		sk2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			int seekProgress;
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				seekSend(seekProgress, "2");
+				seekSend(seekProgress, 2);
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress,
@@ -244,23 +244,28 @@ public class MainActivity extends Activity {
 	}
 
 	public void off1(View view) {
-		mCommandService.write(Integer.parseInt("1" + "0"));
+		mCommandService.write(1);
+		mCommandService.write(0);
 	}
 
 	public void on1(View view) {
-		mCommandService.write(Integer.parseInt("1" + "100"));
+		mCommandService.write(1);
+		mCommandService.write(100);
 	}
 
 	public void off2(View view) {
-		mCommandService.write(Integer.parseInt("2" + "0"));
+		mCommandService.write(2);
+		mCommandService.write(0);
 	}
 
 	public void on2(View view) {
-		mCommandService.write(Integer.parseInt("2" + "100"));
+		mCommandService.write(2);
+		mCommandService.write(100);
 	}
 
-	public void seekSend(int progress, String addr) {
-		mCommandService.write(Integer.parseInt(addr + progress));
+	public void seekSend(int progress, int addr) {
+		mCommandService.write(addr);
+		mCommandService.write(progress);
 	}
 
 	@Override
