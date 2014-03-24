@@ -33,13 +33,13 @@ public class ProcessConnectionThread implements Runnable {
 	    
 	    while (true) {
 		int command = inputStream.read();
-			
-			if (command == EXIT_CMD) {
-			    System.out.println("Exiting process...");
-					break;
-			}
-			
-			processCommand(command);
+		
+		if (command == EXIT_CMD) {
+		    System.out.println("Exiting process...");
+		    break;
+		}
+		
+		processCommand(command, inputStream);
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -47,13 +47,11 @@ public class ProcessConnectionThread implements Runnable {
     }
     
     // Calls a python script from the shell to send the command over UART
-    private void processCommand(int command) {
+    private void processCommand(int command, InputStream inputStream) {
 	try {
 	    String cmd = "";
-	    String commandString = Integer.toString(command);
-	    String target = commandString.substring(0, 1);
-	    String value = commandString.substring(1, commandString.length());
-	    System.out.println("Command: " + command);
+	    int target = command;
+	    int value = inputStream.read();
 	    System.out.println("Target: " + target);
 	    System.out.println("Value: " + value);
 	    cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py " + target;
