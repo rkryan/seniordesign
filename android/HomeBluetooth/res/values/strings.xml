@@ -16,4 +16,9 @@
     <string name="title_connected_to">connected: </string>
     <string name="title_connecting">connecting&#8230;</string>
     <string name="title_not_connected">not connected</string>
+    <string name="ui_on">On</string>
+    <string name="ui_off">Off</string>
+    <string name="ui_label_1">Ceiling Light</string>
+    <string name="ui_label_2">Floor Light</string>
+    <string name="ui_schedule">Schedule</string>
 </resources>

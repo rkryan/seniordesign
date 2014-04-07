@@ -11,6 +11,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -37,6 +40,9 @@ public class MainActivity extends Activity {
 	// Member object for Bluetooth Command Service
 	private BluetoothCommandService mCommandService = null;
 
+	private SeekBar sk1;
+	private SeekBar sk2;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,12 +52,46 @@ public class MainActivity extends Activity {
 		// Set up the window layout
 		setContentView(R.layout.main);
 
+		// Add listeners to SeekBars
+		sk1 = (SeekBar) findViewById(R.id.seekBar1);
+		sk1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			int seekProgress;
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				seekSend(seekProgress, 1);
+			}
+
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				seekProgress = progress;
+			};
+
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+		});
+
+		sk2 = (SeekBar) findViewById(R.id.seekBar2);
+		sk2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			int seekProgress;
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				seekSend(seekProgress, 2);
+			}
+
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				seekProgress = progress;
+			};
+
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+		});
+
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 		// If the adapter is null, then Bluetooth is not supported
 		if (mBluetoothAdapter == null) {
-			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Bluetooth is not available",
+					Toast.LENGTH_LONG).show();
 			finish();
 			return;
 		}
@@ -68,7 +108,8 @@ public class MainActivity extends Activity {
 		// If BT is not on, request that it be enabled.
 		// setupCommand() will then be called during onActivityResult
 		if (!mBluetoothAdapter.isEnabled()) {
-			Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			Intent enableIntent = new Intent(
+					BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 		}
 		// otherwise set up the command service
@@ -86,7 +127,8 @@ public class MainActivity extends Activity {
 
 		// Performing this check in onResume() covers the case in which BT was
 		// not enabled during onStart(), so we were paused to enable it...
-		// onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+		// onResume() will be called when ACTION_REQUEST_ENABLE activity
+		// returns.
 		if (mCommandService != null) {
 			if (mCommandService.getState() == BluetoothCommandService.STATE_NONE) {
 				mCommandService.start();
@@ -108,10 +150,11 @@ public class MainActivity extends Activity {
 	}
 
 	private void ensureDiscoverable() {
-		if (mBluetoothAdapter.getScanMode() !=
-				BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-			Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+		if (mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+			Intent discoverableIntent = new Intent(
+					BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+			discoverableIntent.putExtra(
+					BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
 			startActivity(discoverableIntent);
 		}
 	}
@@ -135,12 +178,14 @@ public class MainActivity extends Activity {
 			case MESSAGE_DEVICE_NAME:
 				// save the connected device's name
 				mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-				Toast.makeText(getApplicationContext(), "Connected to "
-						+ mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						"Connected to " + mConnectedDeviceName,
+						Toast.LENGTH_SHORT).show();
 				break;
 			case MESSAGE_TOAST:
-				Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
+						.show();
 				break;
 			}
 		}
@@ -152,10 +197,11 @@ public class MainActivity extends Activity {
 			// When DeviceListActivity returns with a device to connect
 			if (resultCode == Activity.RESULT_OK) {
 				// Get the device MAC address
-				String address = data.getExtras()
-						.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+				String address = data.getExtras().getString(
+						DeviceListActivity.EXTRA_DEVICE_ADDRESS);
 				// Get the BLuetoothDevice object
-				BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+				BluetoothDevice device = mBluetoothAdapter
+						.getRemoteDevice(address);
 				// Attempt to connect to the device
 				mCommandService.connect(device);
 			}
@@ -167,7 +213,8 @@ public class MainActivity extends Activity {
 				setupCommand();
 			} else {
 				// User did not enable Bluetooth or an error occured
-				Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.bt_not_enabled_leaving,
+						Toast.LENGTH_SHORT).show();
 				finish();
 			}
 		}
@@ -196,13 +243,41 @@ public class MainActivity extends Activity {
 		return false;
 	}
 
+	public void off1(View view) {
+		sk1.setProgress(0);
+		mCommandService.write(1);
+		mCommandService.write(0);
+	}
+
+	public void on1(View view) {
+		sk1.setProgress(100);
+		mCommandService.write(1);
+		mCommandService.write(100);
+	}
+
+	public void off2(View view) {
+		sk2.setProgress(0);
+		mCommandService.write(2);
+		mCommandService.write(0);
+	}
+
+	public void on2(View view) {
+		sk2.setProgress(100);
+		mCommandService.write(2);
+		mCommandService.write(100);
+	}
+
+	public void seekSend(int progress, int addr) {
+		mCommandService.write(addr);
+		mCommandService.write(progress);
+	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
 			mCommandService.write(BluetoothCommandService.VOL_UP);
 			return true;
-		}
-		else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+		} else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
 			mCommandService.write(BluetoothCommandService.VOL_DOWN);
 			return true;
 		}

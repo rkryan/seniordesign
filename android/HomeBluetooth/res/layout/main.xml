@@ -1,7 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-</LinearLayout>
+    android:layout_height="fill_parent" >
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="5"
+        android:rowCount="7" >
+
+        <TextView
+            android:id="@+id/label1"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_column="0"
+            android:layout_columnSpan="3"
+            android:layout_gravity="center|center"
+            android:layout_row="0"
+            android:gravity="center"
+            android:text="@string/ui_label_1"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="213dp"
+            android:layout_column="1"
+            android:layout_gravity="left|top"
+            android:layout_row="1" />
+
+        <Button
+            android:id="@+id/off1"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="1"
+            android:onClick="off1"
+            android:text="@string/ui_off" />
+
+        <Button
+            android:id="@+id/on1"
+            android:layout_column="2"
+            android:layout_gravity="left|top"
+            android:layout_row="1"
+            android:onClick="on1"
+            android:text="@string/ui_on" />
+
+        <LinearLayout
+            android:id="@+id/schedule_wrap1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="3"
+            android:layout_columnSpan="2"
+            android:layout_gravity="center|center"
+            android:layout_row="0"
+            android:layout_rowSpan="2" >
+
+            <ImageButton
+                android:id="@+id/schedule1"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/ui_schedule"
+                android:gravity="center"
+                android:src="@android:drawable/ic_menu_recent_history" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_column="0"
+            android:layout_columnSpan="4"
+            android:layout_row="3"
+            android:background="#33b5e5" />
+
+        <TextView
+            android:id="@+id/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_column="0"
+            android:layout_columnSpan="3"
+            android:layout_gravity="center|center"
+            android:layout_row="4"
+            android:gravity="center"
+            android:text="@string/ui_label_2"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <SeekBar
+            android:id="@+id/seekBar2"
+            android:layout_width="213dp"
+            android:layout_column="1"
+            android:layout_gravity="left|top"
+            android:layout_row="5" />
+
+        <Button
+            android:id="@+id/off2"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="5"
+            android:onClick="off2"
+            android:text="@string/ui_off" />
+
+        <Button
+            android:id="@+id/on2"
+            android:layout_column="2"
+            android:layout_gravity="left|top"
+            android:layout_row="5"
+            android:onClick="on2"
+            android:text="@string/ui_on" />
+
+        <LinearLayout
+            android:id="@+id/schedule_wrap2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="3"
+            android:layout_columnSpan="2"
+            android:layout_gravity="center|center"
+            android:layout_row="4"
+            android:layout_rowSpan="2" >
+
+            <ImageButton
+                android:id="@+id/schedule2"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/ui_schedule"
+                android:gravity="center"
+                android:src="@android:drawable/ic_menu_recent_history" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_column="0"
+            android:layout_columnSpan="4"
+            android:layout_row="6"
+            android:background="#33b5e5" />
+    </GridLayout>
+
+</ScrollView>
