@@ -1,8 +1,10 @@
 package lehigh.seniordesign.homebluetooth;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Toast;
@@ -42,6 +47,9 @@ public class MainActivity extends Activity {
 
 	private SeekBar sk1;
 	private SeekBar sk2;
+	private ImageButton sched1;
+	private ImageButton sched2;
+	final Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,7 @@ public class MainActivity extends Activity {
 		sk1 = (SeekBar) findViewById(R.id.seekBar1);
 		sk1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			int seekProgress;
+
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				seekSend(seekProgress, 1);
 			}
@@ -72,6 +81,7 @@ public class MainActivity extends Activity {
 		sk2 = (SeekBar) findViewById(R.id.seekBar2);
 		sk2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			int seekProgress;
+
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				seekSend(seekProgress, 2);
 			}
@@ -82,6 +92,65 @@ public class MainActivity extends Activity {
 			};
 
 			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+		});
+
+		sched1 = (ImageButton) findViewById(R.id.schedule1);
+
+		sched1.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// custom dialog
+				final Dialog dialog = new Dialog(context);
+				dialog.setContentView(R.layout.schedule1);
+				dialog.setTitle("Schedule - Ceiling Light");
+
+				// set the custom dialog components - text, image and button
+				// TextView text = (TextView) dialog.findViewById(R.id.text);
+				// text.setText("Android custom dialog example!");
+				Button dialogButton = (Button) dialog
+						.findViewById(R.id.dialogButtonOK);
+				// if button is clicked, close the custom dialog
+				dialogButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+
+				dialog.show();
+			}
+		});
+
+		sched2 = (ImageButton) findViewById(R.id.schedule2);
+
+		sched2.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// custom dialog
+				final Dialog dialog = new Dialog(context);
+				dialog.setContentView(R.layout.schedule2);
+				dialog.setTitle("Schedule - Floor Light");
+
+				// set the custom dialog components - text, image and button
+				// TextView text = (TextView) dialog.findViewById(R.id.text);
+				// text.setText("Android custom dialog example!");
+
+				Button dialogButton = (Button) dialog
+						.findViewById(R.id.dialogButtonOK);
+				// if button is clicked, close the custom dialog
+				dialogButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+
+				dialog.show();
 			}
 		});
 
