@@ -51,12 +51,12 @@ public class ProcessConnectionThread implements Runnable {
 	try {
 	    String cmd = "";
 	    int target = command;
-	    int value = inputStream.read();
+	    int value = inputStream.read() * -1 + 200;
 	    System.out.println("Target: " + target);
 	    System.out.println("Value: " + value);
-	    cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py " + target;
-	    Runtime.getRuntime().exec(cmd);
-	    cmd = "/home/pi/git/seniordesign/pi/serial/send_string.py " + value;
+	    //cmd = "sudo /home/pi/git/seniordesign/pi/433Utils/RPi_utils/codesend " + target;
+	    //Runtime.getRuntime().exec(cmd);
+	    cmd = "sudo /home/pi/git/seniordesign/pi/433Utils/RPi_utils/codesend " + value;
 	    Runtime.getRuntime().exec(cmd);
 	} catch (Exception e) {
 	    e.printStackTrace();
