@@ -27,12 +27,14 @@ int main(int argc, char *argv[]) {
     int code = atoi(argv[1]);
     
     if (wiringPiSetup () == -1) return 1;
-	printf("sending code[%i]\n", code);
-	RCSwitch mySwitch = RCSwitch();
-	mySwitch.enableTransmit(PIN);
+    printf("sending code[%i]\n", code);
+    RCSwitch mySwitch = RCSwitch();
+    //mySwitch.setPulseLength(50);
+    mySwitch.setRepeatTransmit(20);
+    mySwitch.enableTransmit(PIN);
     
     mySwitch.send(code, 24);
     
-	return 0;
-
+    return 0;
+    
 }
